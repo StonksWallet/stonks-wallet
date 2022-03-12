@@ -1,6 +1,8 @@
 const {ErrorMiddleware, FormatValidator} = require("./util/middlewares");
+const userRoutes = require("./routes/userRoutes");
 
 module.exports = app => {
     FormatValidator(app);
+    userRoutes(app);
     ErrorMiddleware(app);
 }
