@@ -1,5 +1,5 @@
-const UserModel = require('../../model/User/UserModel.js');
 const User = require("../../model/User/User.js");
+const UserModel = require('../../model/User/UserModel.js');
 const {UserNotFound} = require("../../util/errors");
 
 module.exports = {
