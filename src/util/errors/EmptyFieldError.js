@@ -1,6 +1,6 @@
 class EmptyFieldError extends Error {
     constructor(field) {
-        super(`O campo ${field} eh obrigatorio`);
+        super(`O campo ${field} é obrigatório`);
         this.name = "EmptyFieldError";
         this.id = 5;
     }

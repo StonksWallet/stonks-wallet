@@ -1,6 +1,6 @@
 class UserNotFound extends Error {
     constructor() {
-        super("Usuario nao encontrado");
+        super("Usuário não encontrado");
         this.name = "UserNotFound";
         this.id = 3;
     }
