@@ -1,5 +1,5 @@
 const passport = require('passport');
-const {ErrorSerializer} = require("../../service/Serializer");
+const {ErrorSerializer} = require("../../service/serializer");
 
 function validate(error, user) {
     let status = null;
