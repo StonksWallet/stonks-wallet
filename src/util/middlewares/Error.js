@@ -1,4 +1,4 @@
-const {ErrorSerializer} = require("../../service/Serializer");
+const {ErrorSerializer} = require("../../service/serializer");
 
 module.exports = app => {
     app.use((error, req, res, next) => {

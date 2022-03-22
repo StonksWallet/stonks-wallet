@@ -1,10 +1,10 @@
 const User = require("../model/User/User.js");
-const UserRepository = require('../service/Repositories/UserRepository.js');
+const UserRepository = require('../service/repositories/UserRepository.js');
 const passwordHelper = require('../util/helpers/passwordHelper.js');
 const AuthStrategies = require("../util/AuthStrategies.js");
-const BlackListRepository = require("../service/Repositories/BlacklistRepository.js");
+const BlackListRepository = require("../service/repositories/BlacklistRepository.js");
 const {DuplicatedEmailError} = require("../util/errors");
-const { UserSerializer, TokenSerializer } = require('../service/Serializer');
+const { UserSerializer, TokenSerializer } = require('../service/serializer');
 
 function sendResponse(res, status, result, serializer) {
     res.status(status);
