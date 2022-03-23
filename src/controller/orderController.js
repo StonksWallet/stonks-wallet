@@ -1,7 +1,6 @@
-const Order = require("../model/User/Order.js");
-const OrderRepository = require('../service/Repositories/UserRepository.js');
-const { UserSerializer } = require("../service/Serializer/index.js");
-const {DuplicatedEmailError} = require("../util/errors");
+const Order = require("../model/Order/Order.js");
+const OrderRepository = require('../service/Repositories/OrderRepository.js');
+const { OrderSerializer } = require("../service/Serializer/index.js");
 
 function sendResponse(res, status, result, serializer) {
     res.status(status);
@@ -21,17 +20,17 @@ module.exports = {
             const order = new Order(name, user_email, price, order_date);
             const result = await OrderRepository.save(order);
 
-            sendResponse(res, 201, result, new UserSerializer(res.getHeader('Content-Type')));
+            sendResponse(res, 201, result, new OrderSerializer(res.getHeader('Content-Type')));
         } catch (error) {
             next(error)
         }
     },
-    getOrder: async (req, res, next) => {
+    getOrders: async (req, res, next) => {
         const { name } = req.body;
         const filter = name || 'none';
         try {
-            const result = name ? await OrderRepository.listByName(filter) : await OrderRepository.list();
-            sendResponse(res, 201, result, new UserSerializer(res.getHeader('Content-Type')));
+            const result = name ? await OrderRepository.findByOrderName(filter) : await OrderRepository.find();
+            sendResponse(res, 201, result, new OrderSerializer(res.getHeader('Content-Type')));
         } catch (error) {
             next(error)
         }

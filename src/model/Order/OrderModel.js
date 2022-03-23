@@ -6,12 +6,11 @@ const OrderModel = new Schema({
             required: true
         },
         price: {
-            type: Int16Array,
+            type: Number,
             required: true
         },
         user_email: {
             type: String,
-            unique: true,
             required: true,
         },
         order_date: {

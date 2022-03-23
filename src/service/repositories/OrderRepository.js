@@ -13,8 +13,8 @@ module.exports = {
             throw new OrderNotFound();
         return result.map(order => new Order(order.name, order.user_email, order.price, order.order_date));
     },
-    findByOrderName: async (order_name) => {
-        const result = await OrderModel.find({name: order_name})
+    findByOrderName: async (name) => {
+        const result = await OrderModel.find({name})
         if(!result)
             throw new OrderNotFound();
         return result.map(order => new Order(order.name, order.user_email, order.price, order.order_date));
