@@ -5,6 +5,12 @@ module.exports = app => {
     app.route('/users')
         .post(userController.createUser);
 
+    app.route('/user')
+        .get(
+            Auth.bearer,
+            userController.getUser
+            );
+
     app.route('/users/login')
         .post(
             Auth.local,
