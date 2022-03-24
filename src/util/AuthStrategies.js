@@ -2,10 +2,10 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const jwt = require('jsonwebtoken');
-const UserRepository = require("../service/Repositories/UserRepository.js");
+const UserRepository = require("../service/repositories/UserRepository.js");
 const User = require("../model/User/User.js");
 const config = require('../config');
-const BlackListRepository = require("../service/Repositories/BlacklistRepository.js");
+const BlackListRepository = require("../service/repositories/BlacklistRepository.js");
 
 module.exports = {
     createToken: (user) => {
