@@ -14,11 +14,12 @@ function endResponse(res, status) {
 
 module.exports = {
     createOrder: async (req, res, next) => {
-        const {name, user_email, price, order_date} = req.body;
+        const user_email = req.user.email;
+        const { name, price, order_date, quantity, type_order } = req.body;
         try {
-            Order.validate(name, user_email, price, order_date);
-            const order = new Order(name, user_email, price, order_date);
-            const result = await OrderRepository.save(order);
+            Order.validate(name, price, order_date, quantity, type_order);
+            const order = new Order(name, user_email, price, order_date, quantity, type_order);
+            const result = await OrderRepository.create(order);
 
             sendResponse(res, 201, result, new OrderSerializer(res.getHeader('Content-Type')));
         } catch (error) {
@@ -26,12 +27,37 @@ module.exports = {
         }
     },
     getOrders: async (req, res, next) => {
+        const user_email = req.user.email;
         const { name } = req.body;
         const filter = name || 'none';
         try {
-            const result = name ? await OrderRepository.findByOrderName(filter) : await OrderRepository.find();
+            const result = name ? await OrderRepository.findByNameUserEmail(filter, user_email) : await OrderRepository.findByUserEmail(user_email);
+            
             sendResponse(res, 201, result, new OrderSerializer(res.getHeader('Content-Type')));
         } catch (error) {
+            next(error)
+        }
+    },
+    editOrder: async (req, res, next) => {
+        const user_email = req.user.email;
+        const { id, name, price, order_date, quantity, type_order } = req.body;
+        try {
+            Order.validate(name, price, order_date, quantity, type_order);
+            const order = new Order(name, user_email, price, order_date, quantity, type_order, id)
+            const result = await OrderRepository.update(order);
+            
+            sendResponse(res, 201, result, new OrderSerializer(res.getHeader('Content-Type')));
+        } catch (error) {
+            next(error)
+        }
+    },
+    deleteOrder: async (req, res, next) => {
+        const { id } = req.body;
+        try {
+            const result = await OrderRepository.deleteById(id);
+
+            sendResponse(res, 201, result, new OrderSerializer(res.getHeader('Content-Type')));
+        }   catch (error) {
             next(error)
         }
     }

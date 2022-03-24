@@ -16,6 +16,14 @@ const OrderModel = new Schema({
         order_date: {
             type: Date,
             required: true
+        },
+        quantity: {
+            type: Number,
+            required: true
+        },
+        type_order: {
+            type: Boolean,
+            required: true
         }
     },
     {
