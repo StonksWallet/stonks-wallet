@@ -1,6 +1,6 @@
 class ContentTypeNotSupported extends Error {
     constructor(contentType) {
-        super(`Formato ${contentType} nao suportado`);
+        super(`Formato ${contentType} não suportado`);
         this.name = "ContentTypeError";
         this.id = 1;
     }

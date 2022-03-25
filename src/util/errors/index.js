@@ -4,7 +4,9 @@ module.exports = {
     InvalidArgumentError: require('./InvalidArgumentError.js'),
     ContentTypeNotSupported: require('./ContentTypeNotSupported.js'),        
     UserNotFound: require('./UserNotFound.js'),
+    AssetNotFound: require('./AssetNotFound.js'),
     WrongEmailOrPasswordError: require('./WrongEmailOrPasswordError.js'),
     InvalidEmailError: require('./InvalidEmailError.js'),
-    DuplicatedEmailError: require('./DuplicatedEmailError.js')
+    DuplicatedEmailError: require('./DuplicatedEmailError.js'),
+    DuplicatedAssetError:  require('./DuplicatedAssetError.js')
 }
