@@ -1,10 +1,10 @@
 const validator = require("../../util/helpers/validators.js");
 
-class Asset{
-    constructor(symbol, name="", imagemUrl="") {
+class AssetDTO{
+    constructor(symbol, price, changePercent) {
         this.symbol = symbol;
-        this.name = name;
-        this.imagemUrl = imagemUrl;
+        this.price = price;
+        this.changePercent = changePercent;
     }
 
     static validate(symbol) {
@@ -14,4 +14,4 @@ class Asset{
     }
 }
 
-module.exports = Asset;
+module.exports = AssetDTO;

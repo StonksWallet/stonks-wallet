@@ -1,6 +1,6 @@
 const Serializer = require("./Serializer.js");
 
-class CryptoCurrencySerializer extends Serializer {
+class AssetSerializer extends Serializer {
     constructor(contentType, extraFields = []) {
         super();
         this.contentType = contentType;
@@ -8,4 +8,4 @@ class CryptoCurrencySerializer extends Serializer {
     }
 }
 
-module.exports = CryptoCurrencySerializer;
+module.exports = AssetSerializer;
