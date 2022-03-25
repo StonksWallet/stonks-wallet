@@ -7,11 +7,6 @@ function sendResponse(res, status, result, serializer) {
     res.send(serializer.serialize(result));
 }
 
-function endResponse(res, status) {
-    res.status(status);
-    res.end();
-}
-
 module.exports = {
     createOrder: async (req, res, next) => {
         const user_email = req.user.email;
@@ -33,7 +28,7 @@ module.exports = {
         try {
             const result = name ? await OrderRepository.findByNameUserEmail(filter, user_email) : await OrderRepository.findByUserEmail(user_email);
             
-            sendResponse(res, 201, result, new OrderSerializer(res.getHeader('Content-Type')));
+            sendResponse(res, 200, result, new OrderSerializer(res.getHeader('Content-Type')));
         } catch (error) {
             next(error)
         }
@@ -46,7 +41,7 @@ module.exports = {
             const order = new Order(name, user_email, price, order_date, quantity, type_order, id)
             const result = await OrderRepository.update(order);
             
-            sendResponse(res, 201, result, new OrderSerializer(res.getHeader('Content-Type')));
+            sendResponse(res, 202, result, new OrderSerializer(res.getHeader('Content-Type')));
         } catch (error) {
             next(error)
         }
@@ -56,7 +51,7 @@ module.exports = {
         try {
             const result = await OrderRepository.deleteById(id);
 
-            sendResponse(res, 201, result, new OrderSerializer(res.getHeader('Content-Type')));
+            sendResponse(res, 202, result, new OrderSerializer(res.getHeader('Content-Type')));
         }   catch (error) {
             next(error)
         }

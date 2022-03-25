@@ -21,7 +21,7 @@ module.exports = app => {
         );
     
     app.route('/order/delete')
-        .put(
+        .delete(
             Auth.bearer,
             orderController.deleteOrder
         );

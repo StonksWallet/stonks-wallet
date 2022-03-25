@@ -48,7 +48,7 @@ module.exports = {
             asset.imagemUrl = imageUrl;
             const result = await AssetRepository.save(asset);
             
-            sendResponse(res, 201, result, new AssetSerializer(res.getHeader('Content-Type')));
+            sendResponse(res, 200, result, new AssetSerializer(res.getHeader('Content-Type')));
         } catch (error) {
             next(error);
         }
