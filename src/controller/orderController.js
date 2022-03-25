@@ -1,6 +1,6 @@
 const Order = require("../model/Order/Order.js");
-const OrderRepository = require('../service/Repositories/OrderRepository.js');
-const { OrderSerializer } = require("../service/Serializer/index.js");
+const OrderRepository = require('../service/repositories/OrderRepository.js');
+const { OrderSerializer } = require("../service/serializer/index.js");
 
 function sendResponse(res, status, result, serializer) {
     res.status(status);
