@@ -1,6 +1,6 @@
 const Asset = require("../model/Asset/Asset.js");
 const AssetDTO = require("../model/Asset/AssetDTO.js");
-const AssetRepository = require('../service/Repositories/AssetRepository.js');
+const AssetRepository = require('../service/repositories/AssetRepository.js');
 const {DuplicatedAssetError, AssetNotFound} = require("../util/errors");
 const {AssetSerializer, AssetDTOSerializer} = require('../service/Serializer');
 
