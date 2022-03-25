@@ -4,7 +4,7 @@
   "description": "A web application which generates financial assets statistics",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx standard && jest",
     "start": "node src/server.js"
   },
   "repository": {
@@ -33,5 +33,9 @@
     "passport": "^0.4.1",
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "standard": "^16.0.4"
   }
 }

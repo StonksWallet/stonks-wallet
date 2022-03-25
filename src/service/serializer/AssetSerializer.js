@@ -1,11 +1,11 @@
-const Serializer = require("./Serializer.js");
+const Serializer = require('./Serializer.js')
 
 class AssetSerializer extends Serializer {
-    constructor(contentType, extraFields = []) {
-        super();
-        this.contentType = contentType;
-        this.publicFields = ['name', 'symbol'].concat(extraFields);
-    }
+  constructor (contentType, extraFields = []) {
+    super()
+    this.contentType = contentType
+    this.publicFields = ['name', 'symbol'].concat(extraFields)
+  }
 }
 
-module.exports = AssetSerializer;
+module.exports = AssetSerializer

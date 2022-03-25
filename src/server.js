@@ -1,24 +1,24 @@
-require('dotenv').config();
+require('dotenv').config()
 
-const app = require('./app.js');
-const config = require('./config');
-const dataBaseConfig = require("./config/database");
-const routes = require('./routes');
+const app = require('./app.js')
+const config = require('./config')
+const dataBaseConfig = require('./config/database')
+const routes = require('./routes')
 
-async function startServer() {
-    dataBaseConfig();
+async function startServer () {
+  dataBaseConfig()
 
-    routes(app);
+  routes(app)
 
-    app.listen(config.app.port, (err) => {
-        if(err) {
-            return console.log(err);
-        }
+  app.listen(config.app.port, (err) => {
+    if (err) {
+      return console.log(err)
+    }
 
-        console.log(`Server is up on port ${config.app.port}`);
-    });
+    console.log(`Server is up on port ${config.app.port}`)
+  })
 }
 
-startServer();
+startServer()
 
-module.exports = app;
+module.exports = app

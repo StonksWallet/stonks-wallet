@@ -1,1 +1,1 @@
-module.exports = ['application/json'];
+module.exports = ['application/json']

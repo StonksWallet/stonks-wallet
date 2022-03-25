@@ -1,9 +1,9 @@
 class UserNotFound extends Error {
-    constructor() {
-        super("Usuário não encontrado");
-        this.name = "UserNotFound";
-        this.id = 3;
-    }
+  constructor () {
+    super('Usuário não encontrado')
+    this.name = 'UserNotFound'
+    this.id = 3
+  }
 }
 
-module.exports = UserNotFound;
+module.exports = UserNotFound
