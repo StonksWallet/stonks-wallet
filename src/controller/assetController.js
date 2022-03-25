@@ -2,7 +2,7 @@ const Asset = require("../model/Asset/Asset.js");
 const AssetDTO = require("../model/Asset/AssetDTO.js");
 const AssetRepository = require('../service/repositories/AssetRepository.js');
 const {DuplicatedAssetError, AssetNotFound} = require("../util/errors");
-const {AssetSerializer, AssetDTOSerializer} = require('../service/Serializer');
+const {AssetSerializer, AssetDTOSerializer} = require('../service/serializer');
 
 const Axios = require('axios');
 function sendResponse(res, status, result, serializer) {
