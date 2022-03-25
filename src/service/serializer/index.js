@@ -5,5 +5,6 @@ module.exports = {
     UserSerializer: require('./UserSerializer.js'),
     AssetSerializer: require('./AssetSerializer.js'),
     AssetDTOSerializer: require('./AssetDTOSerializer.js'),
-    TokenSerializer: require('./TokenSerializer.js')    
+    TokenSerializer: require('./TokenSerializer.js'),
+    OrderSerializer: require('./OrderSerializer.js')
 }

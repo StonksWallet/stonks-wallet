@@ -9,7 +9,7 @@ module.exports = app => {
         .get(
             Auth.bearer,
             userController.getUser
-            );
+        );
 
     app.route('/users/login')
         .post(

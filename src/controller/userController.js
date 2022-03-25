@@ -39,7 +39,7 @@ module.exports = {
     getUser: async (req, res, next) => {
         const user = req.user;
         try {
-            sendResponse(res, 201, user, new UserSerializer(res.getHeader('Content-Type')));
+            sendResponse(res, 202, user, new UserSerializer(res.getHeader('Content-Type')));
         } catch (error) {
             next(error);
         }
