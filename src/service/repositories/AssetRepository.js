@@ -16,6 +16,10 @@ module.exports = {
 
         return new Asset(result.symbol);
     },
+    findByParams: async (params) => {
+        const result = await AssetModel.find(params)
+        return new Asset(result.name, result.symbol)
+    },
     findByName: async (name) => {
         const result = await AssetModel.findOne({name: name});
         if(!result)

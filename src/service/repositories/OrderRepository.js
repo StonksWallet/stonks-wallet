@@ -12,6 +12,12 @@ module.exports = {
         const result = await OrderModel.findById(order.id);
         return result.toObject();
     },
+    findByParams: async(params) => {
+        const result = await OrderModel.find(params)
+        return result.map(order => new Order(
+            order.name, order.user_email, order.price, order.order_date, order.quantity, order.type_order, order._id
+        ))
+    },
     findByOrderName: async (name) => {
         const result = await OrderModel.find({name: name})
         if(!result)

@@ -1,6 +1,8 @@
 const Order = require("../model/Order/Order.js");
 const OrderRepository = require('../service/repositories/OrderRepository.js');
 const { OrderSerializer } = require("../service/serializer/index.js");
+const AssetRepository = require('../service/repositories/AssetRepository.js');
+const { InvalidArgumentError } = require("../util/errors");
 
 function sendResponse(res, status, result, serializer) {
     res.status(status);
@@ -12,8 +14,30 @@ module.exports = {
         const user_email = req.user.email;
         const { name, price, order_date, quantity, type_order } = req.body;
         try {
+
             Order.validate(name, price, order_date, quantity, type_order);
+            await AssetRepository.findBySymbol(name); // check if symbol exists
+
             const order = new Order(name, user_email, price, order_date, quantity, type_order);
+
+            let orders = await OrderRepository.findByParams({user_email, name})
+            orders = [...orders, order]
+
+            orders.sort((a, b) => { 
+                let aDate = new Date(a.order_date), bDate = new Date(b.order_date)
+                if (aDate == bDate) {
+                    return b.order_type - a.order_type
+                }
+                return aDate - bDate
+            })
+
+            let sum = 0
+
+            orders.forEach((order) => {
+                sum += order.price * order.quantity * (order.type_order ? 1 : -1)
+                if (sum < 0) throw new InvalidArgumentError('Essa ordem deixa seu saldo de compra negativo em algum momento.')
+            })
+
             const result = await OrderRepository.create(order);
 
             sendResponse(res, 201, result, new OrderSerializer(res.getHeader('Content-Type')));
