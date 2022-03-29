@@ -20,13 +20,12 @@ module.exports = {
             let profit = 0
 
             orders.forEach((order) => {
-                profit += getAssetProfit(user_email, asset)
                 if (!order.order_type) profit += order.price * order.quantity
             })
 
             const result = { profit }
 
-            sendResponse(res, 200, result, new CustomSerializer(res.getHeader('Content-Type'), 'profit'));
+            sendResponse(res, 200, result, new CustomSerializer(res.getHeader('Content-Type'), ['profit']));
         } catch (error) {
             next(error)
         }
