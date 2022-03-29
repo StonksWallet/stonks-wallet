@@ -9,7 +9,7 @@ function sendResponse(res, status, result, serializer) {
 module.exports = {
     getProfit: async (req, res, next) => {
         const user_email = req.user.email;
-        const { name } = req.body;
+        const { name } = req.query;
 
         try {
             let params = { user_email }
