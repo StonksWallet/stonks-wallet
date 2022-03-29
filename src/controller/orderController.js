@@ -87,8 +87,10 @@ module.exports = {
         }
     },
     deleteOrder: async (req, res, next) => {
+        const user_email = req.user.email;
         const { id } = req.body;
         try {
+            let { name } = await OrderRepository.findByParams({ id })
             let orders = await OrderRepository.findByParams({user_email, name})
             orders = orders.filter((order) => id !== order.id)
 
