@@ -1,6 +1,7 @@
 const Asset = require("../model/Asset/Asset.js");
 const AssetDTO = require("../model/Asset/AssetDTO.js");
 const AssetRepository = require('../service/repositories/AssetRepository.js');
+const OrderRepository = require('../service/repositories/OrderRepository.js');
 const {DuplicatedAssetError, AssetNotFound} = require("../util/errors");
 const {AssetSerializer, AssetDTOSerializer} = require('../service/serializer');
 
@@ -99,6 +100,36 @@ module.exports = {
             } catch(error){
                 console.log(error.message);
             }            
+        } catch (error) {
+            next(error);
+        }
+    },    
+    listMyAssets: async (req, res, next) => {
+        const user_email = req.user.email;
+
+        let symbols = await AssetRepository.listAllSymbols();
+        symbols = symbols.map((symbol) => `"${symbol}USDT"`);
+
+        const query = "symbols=[" + symbols.join(',') + "]";
+
+        try {            
+            let orders = await OrderRepository.findByParams({ user_email })
+            let symbols = orders.map((order) => order.name)
+            symbols = [...new Set(symbols)]
+
+            let result = await Axios.get(binanceUrl + query);
+            result = result.data;
+
+            let assetsList = [];
+            for (let asset of result){
+                let symbol = asset.symbol;
+                symbol = symbol.substring(0,asset.symbol.length-4);
+
+                assetsList.push(new AssetDTO(symbol, asset.lastPrice, asset.priceChangePercent));
+            }
+            assetsList = assetsList.filter((asset) => symbols.includes(asset.symbol) )
+
+            sendResponse(res, 200, assetsList, new AssetDTOSerializer(res.getHeader('Content-Type')));
         } catch (error) {
             next(error);
         }

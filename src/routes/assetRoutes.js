@@ -24,4 +24,8 @@ module.exports = app => {
         .get(
             Auth.bearer,
             assetController.listAsset);
+    app.route('/my-assets')
+        .get(
+            Auth.bearer,
+            assetController.listMyAssets);
 };
