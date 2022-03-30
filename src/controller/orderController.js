@@ -71,7 +71,7 @@ module.exports = {
 
             let orders = await OrderRepository.findByParams({user_email, name})
             for (let i = 0; i < orders.length; i++) {
-                if (orders[i].id === order.id) {
+                if (orders[i].id.toString() === order.id) {
                     orders[i] = order
                     break
                 }
