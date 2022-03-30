@@ -20,7 +20,7 @@ module.exports = {
             let profit = 0
 
             orders.forEach((order) => {
-                if (!order.order_type) profit += order.price * order.quantity
+                if (!order.type_order) profit += order.price * order.quantity
             })
 
             const result = { profit }
