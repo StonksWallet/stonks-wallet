@@ -34,12 +34,7 @@ module.exports = {
 
         return new Asset(result.name, result.symbol);
     },
-    listAllSymbols: async () => {
-        const result = await AssetModel.find();
-        if(!result)
-            throw new AssetNotFound();
-
-        let symbolList = result.map((value) => value.symbol);
-        return symbolList;
+    listAllAssets: async () => {
+        return await AssetModel.find();
     },
 }

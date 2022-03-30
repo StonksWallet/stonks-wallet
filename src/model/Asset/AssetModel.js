@@ -11,6 +11,9 @@ const AssetModel = new Schema({
         },
         imagemUrl: {
             type: String
+        },
+        cap: {
+            type: Number
         }
     });
 

@@ -81,10 +81,15 @@ module.exports = {
     },
     listAsset: async (req, res, next) => {
         try {            
-            let symbols = await AssetRepository.listAllSymbols();
-            symbols = symbols.map((symbol) => `"${symbol}USDT"`);
+            let assets = await AssetRepository.listAllAssets();
+            let assetsAmount = {}
+            assets.forEach((asset) => {
+                assetsAmount[asset.symbol] = asset.cap
+            })
 
-            const query = "symbols=[" + symbols.join(',') + "]";
+            assets = assets.map((asset) => `"${asset.symbol}USDT"`);
+
+            const query = "symbols=[" + assets.join(',') + "]";
             try{
                 let result = await Axios.get(binanceUrl + query);
                 result = result.data;
@@ -94,9 +99,9 @@ module.exports = {
                     let symbol = asset.symbol;
                     symbol = symbol.substring(0,asset.symbol.length-4);
 
-                    assetList.push(new AssetDTO(symbol, asset.lastPrice, asset.priceChangePercent));
+                    assetList.push(new AssetDTO(symbol, asset.lastPrice, asset.priceChangePercent, assetsAmount[symbol] * asset.lastPrice));
                 }
-                sendResponse(res, 200, assetList, new AssetDTOSerializer(res.getHeader('Content-Type')));
+                sendResponse(res, 200, assetList, new AssetDTOSerializer(res.getHeader('Content-Type'), ['marketCap']));
             } catch(error){
                 console.log(error.message);
             }            
@@ -107,10 +112,15 @@ module.exports = {
     listMyAssets: async (req, res, next) => {
         const user_email = req.user.email;
 
-        let symbols = await AssetRepository.listAllSymbols();
-        symbols = symbols.map((symbol) => `"${symbol}USDT"`);
+        let assets = await AssetRepository.listAllAssets();
+        let assetsAmount = {}
+        assets.forEach((asset) => {
+            assetsAmount[asset.symbol] = asset.cap
+        })
 
-        const query = "symbols=[" + symbols.join(',') + "]";
+        assets = assets.map((asset) => `"${asset.symbol}USDT"`);
+
+        const query = "symbols=[" + assets.join(',') + "]";
 
         try {            
             let orders = await OrderRepository.findByParams({ user_email })
@@ -125,11 +135,11 @@ module.exports = {
                 let symbol = asset.symbol;
                 symbol = symbol.substring(0,asset.symbol.length-4);
 
-                assetsList.push(new AssetDTO(symbol, asset.lastPrice, asset.priceChangePercent));
+                assetsList.push(new AssetDTO(symbol, asset.lastPrice, asset.priceChangePercent, assetsAmount[symbol] * asset.lastPrice));
             }
             assetsList = assetsList.filter((asset) => symbols.includes(asset.symbol) )
 
-            sendResponse(res, 200, assetsList, new AssetDTOSerializer(res.getHeader('Content-Type')));
+            sendResponse(res, 200, assetsList, new AssetDTOSerializer(res.getHeader('Content-Type'), ['marketCap']));
         } catch (error) {
             next(error);
         }
