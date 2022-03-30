@@ -30,4 +30,58 @@ module.exports = {
             next(error)
         }
     },
+    getMostOperationsInsight: async (req, res, next) => {
+        const user_email = req.user.email;
+
+        try {
+            let orders = await OrderRepository.findByParams({ user_email })
+
+            let profitBySymbols = {}
+
+            orders.forEach((order) => {
+                if (!profitBySymbols.hasOwnProperty(order.name))
+                    profitBySymbols[order.name] = { 'name': order.name, 'count': 0 }
+
+                profitBySymbols[order.name].count++
+            })
+
+            let symbolsProfit = Object.values(profitBySymbols)
+
+            symbolsProfit.sort((a, b) => { a.count - b.count })
+
+            if (symbolsProfit.legth > 5) symbolsProfit = symbolsProfit.slice(0, 5)
+
+            sendResponse(res, 200, symbolsProfit, new CustomSerializer(res.getHeader('Content-Type'), ['name', 'count']));
+        } catch (error) {
+            next(error)
+        }
+    },
+    getMostProfitInsight: async (req, res, next) => {
+        const user_email = req.user.email;
+
+        try {
+            let orders = await OrderRepository.findByParams({ user_email })
+
+            let profitBySymbols = {}
+
+            orders.forEach((order) => {
+                if (!order.type_order) {
+                    if (!profitBySymbols.hasOwnProperty(order.name))
+                        profitBySymbols[order.name] = { 'name': order.name, 'profit': 0 }
+
+                    profitBySymbols[order.name].profit += order.quantity * order.price
+                }
+            })
+
+            let symbolsProfit = Object.values(profitBySymbols)
+
+            symbolsProfit.sort((a, b) => { a.profit - b.profit })
+
+            if (symbolsProfit.legth > 5) symbolsProfit = symbolsProfit.slice(0, 5)
+
+            sendResponse(res, 200, symbolsProfit, new CustomSerializer(res.getHeader('Content-Type'), ['name', 'profit']));
+        } catch (error) {
+            next(error)
+        }
+    },
 };
